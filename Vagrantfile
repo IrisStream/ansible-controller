@@ -26,14 +26,12 @@ Vagrant.configure("2") do |config|
     controller.vm.network "private_network", ip:  "#{SUBNET_MASK}#{CONTROLLER_ID}"
     controller.vm.provision "shell", path: "install_ansible.sh", privileged: true
     controller.vm.synced_folder "playbooks", "/playbooks", mount_options: ["dmode=770,fmode=770"]
-    controller.vm.provision 'copy_privat_key', type: 'file', 
+    controller.vm.provision 'copy_private_key', type: 'file', 
       source: '~/.ssh/id_rsa', 
       destination: '~/.ssh/id_rsa' 
-    controller.vm.provision 'ansible-playbook', type: 'shell',
-      # inline: "ansible-playbook /playbooks/#{ENV['PLAYBOOK_NAME']}",
-      inline: "ansible-playbook /playbooks/my-playbook.yaml",
-      privileged: false,
-      run: "never"
+    controller.vm.provision "change_private_key_mod", type: "shell",
+      inline: 'chmod 600 ~/.ssh/id_rsa',
+      privileged: false
   end
 
   (1..2).each do |i|

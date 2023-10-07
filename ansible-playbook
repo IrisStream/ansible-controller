@@ -6,4 +6,4 @@ else
 	playbook_name=$1
 fi
 
-ssh -t vagrant@192.168.56.9 "ansible-playbook /playbooks/$playbook_name"
+ssh -o StrictHostKeyChecking=no -t vagrant@192.168.56.9 "ansible-playbook /playbooks/$playbook_name"
