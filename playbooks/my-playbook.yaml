@@ -1,0 +1,5 @@
+- name: "test connection"
+  hosts: all
+  tasks:
+  - debug:
+      msg: Hello {{ inventory_hostname }}
